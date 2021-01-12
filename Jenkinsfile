@@ -69,9 +69,12 @@ pipeline {
             steps{
                sh  """
                     sudo pm2 stop /backends/oneRoomDirectory-staging/ecosystem.config.js 1>/dev/null
+
                     sudo rm -rf /backend/oneRoomDirectory-staging/*
                     sudo cp backend/*.js backend/package.json /backends/oneRoomDirectory-staging/ -rf
+                    sudo cp /backends/env/oneRoomDirectory/.env /backends/oneRoomDirectory-staging/
                     sudo npm --prefix /backends/oneRoomDirectory-staging/ install
+                    
                     cd /backends/oneRoomDirectory-staging
                     sudo pm2 start ecosystem.config.js --env staging 1>/dev/null
                 """
