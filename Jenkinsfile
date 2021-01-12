@@ -22,7 +22,7 @@ pipeline {
         }
         stage('Build Backend') {
             steps {
-                sh 'node --check *.js'
+                sh 'node --check backend/*.js'
                 sh 'npm install'
             }
         }
