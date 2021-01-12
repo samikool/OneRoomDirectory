@@ -10,7 +10,8 @@ pipeline {
         stage('Build Frontend') {
             steps {
                 sh """
-                    npm install --prefix frontend
+                    echo "not sure what todo here rn..."
+                    #npm install --prefix frontend
                 """
             }
         }
@@ -52,9 +53,9 @@ pipeline {
             }
             steps{
                sh  """
-                    rm -rf /srv/http/oneRoomDirectory-staging/*
-                    cp frontend/build/* -rf /srv/http/oneRoomDirectory-staging/
-                    echo "frontend deployed..."
+                    sudo rm -rf /srv/http/oneRoomDirectory-staging/*
+                    sudo cp frontend/build/* -rf /srv/http/oneRoomDirectory-staging/
+                    sudo echo "frontend deployed..."
 
 
                 """
@@ -66,11 +67,11 @@ pipeline {
             }
             steps{
                sh  """
-                    pm2 stop /backend/oneRoomDirectory-staging/ecosystem.config.js 1>/dev/null
-                    rm -rf /backend/oneRoomDirectory-staging/*
-                    cp backend/*.js backend/package.json /backend/oneRoomDirectory-staging/ -rf
-                    npm --prefix /backend/oneRoomDirectory-staging/ install
-                    pm2 start /backend/oneRoomDirectory-staging/ecosystem.config.js --env staging 1>/dev/null
+                    sudo pm2 stop /backend/oneRoomDirectory-staging/ecosystem.config.js 1>/dev/null
+                    sudo rm -rf /backend/oneRoomDirectory-staging/*
+                    sudo cp backend/*.js backend/package.json /backend/oneRoomDirectory-staging/ -rf
+                    sudo npm --prefix /backend/oneRoomDirectory-staging/ install
+                    sudo pm2 start /backend/oneRoomDirectory-staging/ecosystem.config.js --env staging 1>/dev/null
                 """
             }
         }
