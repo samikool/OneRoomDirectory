@@ -10,8 +10,8 @@ pipeline {
         stage('Build Frontend') {
             steps {
                 sh """
-                    echo "not sure what todo here rn..."
-                    #npm install --prefix frontend
+                    #echo "not sure what todo here rn..."
+                    npm install --prefix frontend
                 """
             }
         }
@@ -23,9 +23,11 @@ pipeline {
         }
         stage('Build Backend') {
             steps {
-                sh 'node --check backend/*.js'
-                sh 'npm install'
-            }
+                sh """
+                    'node --check backend/*.js'
+                    'npm install --prefix backend' 
+                """
+                }
         }
         stage('Test Backend'){
             steps{
