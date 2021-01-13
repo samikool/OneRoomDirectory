@@ -80,7 +80,7 @@ pipeline {
         }
         stage('Deploy Frontend to Production'){
             when { 
-                branch 'production'
+                tag 'release-v*'
             }
             steps {
                 sh  """
@@ -93,7 +93,6 @@ pipeline {
         }
         stage('Deploy Backend to Production'){
             when {
-                branch 'production'
                 tag 'release-v*'
             }
             steps {
