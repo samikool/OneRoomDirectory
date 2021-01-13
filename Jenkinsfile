@@ -94,7 +94,7 @@ pipeline {
         stage('Deploy Backend to Production'){
             when {
                 branch 'production'
-                tag 'v*'
+                tag 'release-v*'
             }
             steps {
                 sh  """
