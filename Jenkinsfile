@@ -54,7 +54,7 @@ pipeline {
             }
             steps{
                sh  """
-                    npm run install --prefix frontend
+                    npm install --prefix frontend
                     npm run build:staging --prefix frontend
                     sudo rm -rf /srv/http/oneRoomDirectory-staging/*
                     sudo cp frontend/build/* -rf /srv/http/oneRoomDirectory-staging/
