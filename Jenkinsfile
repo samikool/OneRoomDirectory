@@ -92,8 +92,10 @@ pipeline {
             }
         }
         stage('Deploy Backend to Production'){
-            when {branch 'production'}
-            when {tag 'v*'}
+            when {
+                branch 'production'
+                tag 'v*'
+            }
             steps {
                 sh  """
                     sudo pm2 stop /backends/oneRoomDirectory/ecosystem.config.js 1>/dev/null
