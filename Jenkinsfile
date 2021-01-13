@@ -57,12 +57,10 @@ pipeline {
                     sudo rm -rf /srv/http/oneRoomDirectory-staging/*
                     sudo cp frontend/build/* -rf /srv/http/oneRoomDirectory-staging/
                     sudo echo "frontend deployed..."
-
-
                 """
             }
         }
-        stage('Deploy Backend  to Staging'){
+        stage('Deploy Backend to Staging'){
             when {
                 branch 'staging'
             }
@@ -80,12 +78,35 @@ pipeline {
                 """
             }
         }
-        stage('Deploy to production'){
+        stage('Deploy Frontend to Production'){
             when { 
                 branch 'production'
             }
             steps {
-                sh '/discordbot/scripts/production-deploy.sh'
+                sh  """
+                    npm run build --prefix frontend
+                    sudo rm -rf /srv/http/oneRoomDirectory/*
+                    sudo cp frontend/build/* -rf /srv/http/oneRoomDirectory/
+                    sudo echo "frontend deployed..."
+                """
+            }
+        }
+        stage('Deploy Backend to Production'){
+            when { 
+                branch 'production'
+            }
+            steps {
+                sh  """
+                    sudo pm2 stop /backends/oneRoomDirectory/ecosystem.config.js 1>/dev/null
+
+                    sudo rm -rf /backend/oneRoomDirectory/*
+                    sudo cp backend/*.js backend/package.json /backends/oneRoomDirectory/ -rf
+                    sudo cp /backends/env/oneRoomDirectory/.env /backends/oneRoomDirectory/
+                    sudo npm --prefix /backends/oneRoomDirectory/ install
+                    
+                    cd /backends/oneRoomDirectory
+                    sudo pm2 start ecosystem.config.js --env production 1>/dev/null
+                """
             }
         }
     }
