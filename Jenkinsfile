@@ -109,7 +109,7 @@ pipeline {
                     sudo npm --prefix /backends/oneRoomDirectory/ install
                     
                     cd /backends/oneRoomDirectory
-                    sudo pm2 start ecosystem.config.js --env production 1>/dev/null
+                    sudo pm2 start ecosystem.config.js 1>/dev/null
                 """
             }
         }
